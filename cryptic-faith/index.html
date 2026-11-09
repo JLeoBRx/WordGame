@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a1c34">
+  <meta name="description" content="Cryptic Faith: desvende mensagens do Catecismo da Igreja Católica em um jogo de criptograma.">
+  <title>Cryptic Faith — Catecismo em códigos</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/icon.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Ícones (SVG sprite) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-gear" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" d="M19.42 9.00 L22.41 9.98 L22.41 14.02 L19.42 15.00 L19.36 15.13 L20.79 17.93 L17.93 20.79 L15.13 19.36 L15.00 19.42 L14.02 22.41 L9.98 22.41 L9.00 19.42 L8.87 19.36 L6.07 20.79 L3.21 17.930 L4.64 15.13 L4.58 15.00 L1.59 14.02 L1.59 9.98 L4.58 9.00 L4.64 8.87 L3.21 6.07 L6.07 3.21 L8.87 4.64 L9.00 4.58 L9.98 1.59 L14.02 1.59 L15.00 4.58 L15.13 4.64 L17.93 3.21 L20.79 6.07 L19.36 8.87 Z M15.40 12 A3.4 3.4 0 1 0 8.60 12 A3.4 3.4 0 1 0 15.40 12 Z"/></symbol>
+      <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="5" width="4.2" height="14" rx="1.6" fill="currentColor"/><rect x="13.8" y="5" width="4.2" height="14" rx="1.6" fill="currentColor"/></symbol>
+      <symbol id="i-help" viewBox="0 0 24 24"><path d="M8.8 9.2a3.3 3.3 0 1 1 4.9 2.9c-1 .55-1.7 1.3-1.7 2.4v.7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="12" cy="18.6" r="1.6" fill="currentColor"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></symbol>
+      <symbol id="i-home" viewBox="0 0 24 24"><path d="M3.5 11.2 12 4l8.5 7.2M6 9.5V20h12V9.5M10 20v-5h4v5" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-restart" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 1 1-2.4-5.5M19.5 4.5v4.8h-4.8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="M8.5 5.6c0-.9 1-1.4 1.7-.9l8.6 6.4c.6.45.6 1.35 0 1.8l-8.6 6.4c-.7.5-1.7 0-1.7-.9z" fill="currentColor"/></symbol>
+      <symbol id="i-backspace" viewBox="0 0 24 24"><path d="M9 5h10.5A1.5 1.5 0 0 1 21 6.5v11a1.5 1.5 0 0 1-1.5 1.5H9l-6-7z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M11.5 9.2l5.6 5.6M17.1 9.2l-5.6 5.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+      <symbol id="i-eraser" viewBox="0 0 24 24"><path d="M8.2 19.5 3.9 15.2a1.8 1.8 0 0 1 0-2.6l8.7-8.7a1.8 1.8 0 0 1 2.6 0l4.2 4.2a1.8 1.8 0 0 1 0 2.6l-8.6 8.8zM8.6 8l7.6 7.6M8.2 19.5H20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.2 17.6h5.6M10 21h4M12 2.8a6.2 6.2 0 0 0-3.8 11.1c.7.55 1.1 1.3 1.1 2.1v.4h5.4V16c0-.8.4-1.55 1.1-2.1A6.2 6.2 0 0 0 12 2.8z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-left" viewBox="0 0 24 24"><path d="M14.5 5.5 8 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-right" viewBox="0 0 24 24"><path d="M9.5 5.5 16 12l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.6l2.85 5.8 6.4.93-4.63 4.5 1.1 6.37L12 17.2l-5.72 3 1.1-6.37-4.63-4.5 6.4-.93z" fill="currentColor" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+      <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5v13M12 6.5C9.6 4.7 6.2 4.2 3 5v13.2c3.2-.8 6.6-.3 9 1.3 2.4-1.6 5.8-2.1 9-1.3V5c-3.2-.8-6.6-.3-9 1.5z" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9.5h3.4L12 5.6v12.8l-4.6-3.9H4z" fill="currentColor" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M15.4 9.2a4 4 0 0 1 0 5.6M18.2 6.6a7.6 7.6 0 0 1 0 10.8" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></symbol>
+      <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 17.5V5.8l10.5-2v11.7" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.6" cy="17.6" r="2.6" fill="currentColor"/><circle cx="17.1" cy="15.6" r="2.6" fill="currentColor"/></symbol>
+      <symbol id="i-vibrate" viewBox="0 0 24 24"><rect x="7.5" y="3.5" width="9" height="17" rx="2.2" fill="none" stroke="currentColor" stroke-width="2.1"/><path d="M3.8 9v6M20.2 9v6" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2.1"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 7h15M9.5 7V4.8h5V7M6.5 7l.9 12.2c.1.8.7 1.3 1.5 1.3h6.2c.8 0 1.4-.5 1.5-1.3L17.5 7" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- Cenário de fundo -->
+  <div class="backdrop" aria-hidden="true">
+    <div class="backdrop__light"></div>
+    <div class="backdrop__rays"></div>
+    <div class="backdrop__glyphs" id="floatingGlyphs"></div>
+    <div class="backdrop__dust" id="dust"></div>
+  </div>
+
+  <main class="app" id="app">
+    <div class="app__scene" aria-hidden="true"></div>
+
+    <!-- ===================== A. TELA INICIAL ===================== -->
+    <section class="screen screen--home is-active" id="screen-home" aria-labelledby="homeTitle">
+      <div class="topbar">
+        <span></span>
+        <button class="icon-btn" type="button" data-action="open-settings" aria-label="Configurações">
+          <svg class="icon"><use href="#i-gear"/></svg>
+        </button>
+      </div>
+
+      <div class="home__hero">
+        <div class="emblem" aria-hidden="true">
+          <svg viewBox="0 0 260 180" class="emblem__svg">
+            <defs>
+              <radialGradient id="emGlow" cx="50%" cy="72%" r="55%">
+                <stop offset="0" stop-color="#ffe7a3" stop-opacity=".95"/>
+                <stop offset=".35" stop-color="#f2c45a" stop-opacity=".45"/>
+                <stop offset="1" stop-color="#f2c45a" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="emRay" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0" stop-color="#ffe9a8" stop-opacity=".85"/>
+                <stop offset="1" stop-color="#ffe9a8" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="emPageL" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#efe0bd"/>
+                <stop offset="1" stop-color="#fffaf0"/>
+              </linearGradient>
+              <linearGradient id="emPageR" x1="1" y1="0" x2="0" y2="0">
+                <stop offset="0" stop-color="#efe0bd"/>
+                <stop offset="1" stop-color="#fffaf0"/>
+              </linearGradient>
+              <linearGradient id="emCover" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#1fa3a0"/>
+                <stop offset="1" stop-color="#0d5a63"/>
+              </linearGradient>
+            </defs>
+            <ellipse cx="130" cy="128" rx="128" ry="62" fill="url(#emGlow)"/>
+            <g class="emblem__rays">
+              <path d="M130 118 L92 0 H112 Z" fill="url(#emRay)"/>
+              <path d="M130 118 L120 0 H140 Z" fill="url(#emRay)"/>
+              <path d="M130 118 L148 0 H168 Z" fill="url(#emRay)"/>
+              <path d="M130 118 L52 12 L68 4 Z" fill="url(#emRay)" opacity=".7"/>
+              <path d="M130 118 L192 4 L208 12 Z" fill="url(#emRay)" opacity=".7"/>
+              <path d="M130 118 L18 40 L28 30 Z" fill="url(#emRay)" opacity=".45"/>
+              <path d="M130 118 L232 30 L242 40 Z" fill="url(#emRay)" opacity=".45"/>
+            </g>
+            <!-- capa -->
+            <path d="M130 156 C108 146 70 142 22 150 L20 116 C68 108 108 112 130 124 C152 112 192 108 240 116 L238 150 C190 142 152 146 130 156 Z" fill="url(#emCover)"/>
+            <path d="M130 156 C108 146 70 142 22 150 L22 154 C70 146 108 150 130 160 C152 150 190 146 238 154 L238 150 C190 142 152 146 130 156 Z" fill="#0a3f47"/>
+            <!-- páginas -->
+            <path d="M130 120 C108 104 72 100 30 108 L30 144 C72 136 108 140 130 150 Z" fill="url(#emPageL)"/>
+            <path d="M130 120 C152 104 188 100 230 108 L230 144 C188 136 152 140 130 150 Z" fill="url(#emPageR)"/>
+            <path d="M130 120 V150" stroke="#d6bf8c" stroke-width="2"/>
+            <g stroke="#d9c595" stroke-width="2" stroke-linecap="round" fill="none" opacity=".8">
+              <path d="M44 116 C70 111 96 112 116 120"/>
+              <path d="M44 124 C70 119 96 120 116 128"/>
+              <path d="M44 132 C70 127 96 128 116 136"/>
+              <path d="M144 120 C164 112 190 111 216 116"/>
+              <path d="M144 128 C164 120 190 119 216 124"/>
+              <path d="M144 136 C164 128 190 127 216 132"/>
+            </g>
+          </svg>
+          <div class="emblem__glyphs" id="emblemGlyphs"></div>
+        </div>
+
+        <h1 class="logo" id="homeTitle" aria-label="Cryptic Faith">
+          <span class="logo__row" data-word="CRYPTIC" aria-hidden="true"></span>
+          <span class="logo__row logo__row--alt" data-word="FAITH" aria-hidden="true"></span>
+        </h1>
+        <p class="home__tagline">Desvende a fé, um símbolo de cada vez.</p>
+      </div>
+
+      <div class="home__actions">
+        <button class="btn btn--green btn--xl" type="button" data-action="play">
+          <svg class="icon"><use href="#i-play"/></svg><span>JOGAR</span>
+        </button>
+        <button class="btn btn--blue" type="button" data-action="open-howto">
+          <svg class="icon"><use href="#i-help"/></svg><span>COMO JOGAR</span>
+        </button>
+      </div>
+
+      <div class="level-card" id="homeLevelCard">
+        <div class="level-card__badge"><span>LEVEL</span><strong>1</strong></div>
+        <div class="level-card__info">
+          <strong>Catecismo da Igreja Católica, §1</strong>
+          <span id="homeLevelStatus">Uma mensagem secreta espera por você.</span>
+        </div>
+        <button class="chip-btn" type="button" data-action="open-learn" id="btnHomeLearn" hidden>
+          <svg class="icon"><use href="#i-book"/></svg><span>LER §1</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== B. TELA DA FASE ===================== -->
+    <section class="screen screen--game" id="screen-game" aria-label="Fase">
+      <header class="hud">
+        <button class="icon-btn icon-btn--gold" type="button" data-action="pause" aria-label="Pausar">
+          <svg class="icon"><use href="#i-pause"/></svg>
+        </button>
+        <div class="hud__bar">
+          <button class="hud__help" type="button" data-action="open-howto" aria-label="Como jogar">
+            <svg class="icon"><use href="#i-help"/></svg>
+          </button>
+          <div class="hud__lives" id="lives" role="img" aria-label="Erros: 0 de 3">
+            <span class="life"><svg class="icon"><use href="#i-x"/></svg></span>
+            <span class="life"><svg class="icon"><use href="#i-x"/></svg></span>
+            <span class="life"><svg class="icon"><use href="#i-x"/></svg></span>
+          </div>
+          <div class="hud__level" id="hudLevel"><span>LEVEL</span><strong>1</strong></div>
+        </div>
+      </header>
+
+      <div class="progress" aria-label="Progresso da frase">
+        <div class="progress__track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar">
+          <div class="progress__fill" id="progressFill"></div>
+        </div>
+        <span class="progress__label" id="progressLabel">0%</span>
+      </div>
+
+      <div class="board-wrap">
+        <div class="board" id="board">
+          <div class="board__phrase" id="phrase" role="group" aria-label="Frase criptografada"></div>
+        </div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="keyboard" id="keyboard" aria-label="Teclado">
+        <div class="keyboard__rows" id="keyRows"></div>
+        <div class="keyboard__actions">
+          <button class="pill-btn pill-btn--gold" type="button" data-action="hint" id="btnHint">
+            <svg class="icon"><use href="#i-bulb"/></svg><span>DICA</span><b class="pill-btn__count" id="hintCount">2</b>
+          </button>
+          <button class="pill-btn" type="button" data-action="clear" id="btnClear">
+            <svg class="icon"><use href="#i-eraser"/></svg><span>LIMPAR</span>
+          </button>
+          <button class="pill-btn" type="button" data-action="erase" id="btnErase">
+            <svg class="icon"><use href="#i-backspace"/></svg><span>APAGAR</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== E. TELA DE APRENDIZADO ===================== -->
+    <section class="screen screen--learn" id="screen-learn" aria-labelledby="learnTitle">
+      <div class="topbar">
+        <button class="icon-btn" type="button" data-action="menu" aria-label="Voltar ao menu">
+          <svg class="icon"><use href="#i-home"/></svg>
+        </button>
+        <span class="topbar__chip"><svg class="icon"><use href="#i-check"/></svg>LEVEL 1 CONCLUÍDO</span>
+        <span class="topbar__spacer"></span>
+      </div>
+
+      <div class="learn__scroll" id="learnScroll">
+        <div class="learn__hero">
+          <div class="learn__icon"><svg class="icon"><use href="#i-book"/></svg></div>
+          <h2 class="learn__title" id="learnTitle">O QUE A IGREJA NOS ENSINA?</h2>
+          <p class="ref-chip" id="learnReference">Catecismo da Igreja Católica, §1</p>
+        </div>
+
+        <article class="reading-card">
+          <header class="reading-card__header">
+            <span class="reading-card__para">§1</span>
+            <h3 class="reading-card__heading" id="catechismHeading">Catecismo da Igreja Católica — Parágrafo 1</h3>
+          </header>
+          <blockquote class="reading-card__text" id="catechismText"></blockquote>
+          <p class="reading-card__cite" id="catechismCite">Catecismo da Igreja Católica, §1</p>
+        </article>
+
+        <div class="recap">
+          <span class="recap__label">A mensagem que você decifrou</span>
+          <p class="recap__phrase" id="recapPhrase"></p>
+          <small class="recap__note">Frase do desafio: uma síntese pedagógica do §1, não o texto oficial do Catecismo.</small>
+        </div>
+
+        <section class="reflect" aria-labelledby="reflectTitle">
+          <h3 class="reflect__title" id="reflectTitle"><svg class="icon"><use href="#i-bulb"/></svg>PARA REFLETIR</h3>
+          <p class="reflect__question" id="reflectQuestion"></p>
+        </section>
+
+        <div class="learn__actions">
+          <button class="btn btn--green btn--xl" type="button" data-action="replay">
+            <svg class="icon"><use href="#i-restart"/></svg><span>JOGAR NOVAMENTE</span>
+          </button>
+          <button class="btn btn--blue" type="button" data-action="menu">
+            <svg class="icon"><use href="#i-home"/></svg><span>MENU</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SOBREPOSIÇÕES ===================== -->
+
+    <!-- Abertura da fase -->
+    <div class="overlay overlay--intro" id="overlay-intro" data-action="start-level">
+      <div class="intro-card" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+        <span class="intro-card__kicker">Catecismo da Igreja Católica · §1</span>
+        <h2 class="intro-card__title" id="introTitle">LEVEL 1</h2>
+        <p class="intro-card__teaser" id="introTeaser"></p>
+        <p class="intro-card__hint">Decifre a mensagem escondida nos símbolos.</p>
+        <button class="btn btn--green" type="button" data-action="start-level" data-autofocus>
+          <svg class="icon"><use href="#i-play"/></svg><span>COMEÇAR</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- C. Pausa -->
+    <div class="overlay" id="overlay-pause">
+      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="pauseTitle">
+        <div class="panel__tab" id="pauseTitle">PAUSA</div>
+        <button class="panel__close" type="button" data-action="resume" aria-label="Continuar">
+          <svg class="icon"><use href="#i-close"/></svg>
+        </button>
+        <div class="panel__stats">
+          <span><svg class="icon"><use href="#i-clock"/></svg><b id="pauseTime">00:00</b></span>
+          <span><svg class="icon"><use href="#i-x"/></svg><b id="pauseErrors">0/3</b> erros</span>
+        </div>
+        <div class="settings-box" data-settings></div>
+        <div class="panel__buttons">
+          <button class="btn btn--blue" type="button" data-action="menu">
+            <svg class="icon"><use href="#i-home"/></svg><span>VOLTAR AO MENU</span>
+          </button>
+          <button class="btn btn--gold" type="button" data-action="restart">
+            <svg class="icon"><use href="#i-restart"/></svg><span>REINICIAR FASE</span>
+          </button>
+          <button class="btn btn--green" type="button" data-action="resume" data-autofocus>
+            <svg class="icon"><use href="#i-play"/></svg><span>CONTINUAR</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Configurações -->
+    <div class="overlay" id="overlay-settings">
+      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+        <div class="panel__tab" id="settingsTitle">CONFIGURAÇÕES</div>
+        <button class="panel__close" type="button" data-action="close-overlay" aria-label="Fechar">
+          <svg class="icon"><use href="#i-close"/></svg>
+        </button>
+        <div class="settings-box" data-settings></div>
+        <div class="panel__buttons">
+          <button class="btn btn--ghost btn--sm" type="button" data-action="reset-progress" id="btnResetProgress">
+            <svg class="icon"><use href="#i-trash"/></svg><span>APAGAR PROGRESSO SALVO</span>
+          </button>
+          <button class="btn btn--green" type="button" data-action="close-overlay" data-autofocus>
+            <svg class="icon"><use href="#i-check"/></svg><span>PRONTO</span>
+          </button>
+        </div>
+        <p class="panel__foot">As preferências ficam salvas apenas neste navegador.</p>
+      </div>
+    </div>
+
+    <!-- Como jogar -->
+    <div class="overlay" id="overlay-howto">
+      <div class="panel panel--tall" role="dialog" aria-modal="true" aria-labelledby="howtoTitle">
+        <div class="panel__tab" id="howtoTitle">COMO JOGAR</div>
+        <button class="panel__close" type="button" data-action="close-overlay" aria-label="Fechar">
+          <svg class="icon"><use href="#i-close"/></svg>
+        </button>
+        <div class="howto">
+          <ol class="howto__steps">
+            <li>
+              <span class="howto__demo" id="howtoDemoSymbols"></span>
+              <p><b>Cada símbolo esconde uma letra.</b> O mesmo símbolo é sempre a mesma letra, e letras diferentes nunca dividem um símbolo.</p>
+            </li>
+            <li>
+              <span class="howto__demo howto__demo--select"><span class="mini-disk is-selected"></span><span class="mini-key">R</span></span>
+              <p><b>Toque num símbolo e escolha uma letra.</b> Todas as posições com aquele símbolo são preenchidas de uma vez.</p>
+            </li>
+            <li>
+              <span class="howto__demo"><span class="mini-disk is-correct">R</span><span class="mini-disk is-wrong">T</span></span>
+              <p><b>Acertou, a letra brilha em dourado.</b> Errou, ela fica vermelha e conta um erro. Corrija digitando outra letra ou use <b>APAGAR</b>. <b>LIMPAR</b> remove todas as letras erradas.</p>
+            </li>
+            <li>
+              <span class="howto__demo howto__demo--lives"><span class="life is-lost"><svg class="icon"><use href="#i-x"/></svg></span><span class="life"></span><span class="life"></span></span>
+              <p><b>Você pode errar 3 vezes.</b> No terceiro erro a fase termina e você pode tentar de novo.</p>
+            </li>
+            <li>
+              <span class="howto__demo"><span class="mini-disk is-given">Ê</span><span class="mini-key">Ç</span></span>
+              <p><b>Acentos e cedilha:</b> digite a letra sem acento. A tecla <b>E</b> também revela <b>Ê</b>. O <b>Ç</b> é uma letra própria e tem tecla própria.</p>
+            </li>
+            <li>
+              <span class="howto__demo"><span class="mini-pill"><svg class="icon"><use href="#i-bulb"/></svg></span></span>
+              <p><b>Precisa de luz?</b> Use a <b>DICA</b> para revelar o símbolo selecionado. São 2 por fase e não contam como erro.</p>
+            </li>
+          </ol>
+
+          <div class="legend">
+            <h4>Cores do teclado</h4>
+            <ul>
+              <li><span class="mini-key">A</span>Disponível</li>
+              <li><span class="mini-key is-correct">R</span>Descoberta</li>
+              <li><span class="mini-key is-given">O</span>Revelada no início</li>
+              <li><span class="mini-key is-wrong">T</span>Já tentada aqui</li>
+            </ul>
+          </div>
+
+          <div class="legend legend--keys">
+            <h4>No computador</h4>
+            <ul>
+              <li><kbd>A–Z</kbd><kbd>Ç</kbd> escolher letra</li>
+              <li><kbd>←</kbd><kbd>→</kbd> mudar de símbolo</li>
+              <li><kbd>Backspace</kbd> apagar</li>
+              <li><kbd>Esc</kbd> pausar</li>
+            </ul>
+          </div>
+        </div>
+        <div class="panel__buttons">
+          <button class="btn btn--green" type="button" data-action="close-overlay" data-autofocus>
+            <svg class="icon"><use href="#i-check"/></svg><span>ENTENDI</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- D. Vitória -->
+    <div class="overlay overlay--victory" id="overlay-victory">
+      <div class="panel panel--victory" role="dialog" aria-modal="true" aria-labelledby="victoryTitle">
+        <div class="victory__burst" aria-hidden="true"></div>
+        <h2 class="victory__title" id="victoryTitle">MENSAGEM DESCOBERTA!</h2>
+        <div class="stars" id="victoryStars" aria-label="">
+          <svg class="icon star"><use href="#i-star"/></svg>
+          <svg class="icon star star--mid"><use href="#i-star"/></svg>
+          <svg class="icon star"><use href="#i-star"/></svg>
+        </div>
+        <div class="parchment">
+          <p class="parchment__phrase" id="victoryPhrase"></p>
+          <span class="parchment__ref">Síntese do Catecismo, §1</span>
+        </div>
+        <dl class="stats">
+          <div><dt><svg class="icon"><use href="#i-clock"/></svg>Tempo</dt><dd id="statTime">00:00</dd></div>
+          <div><dt><svg class="icon"><use href="#i-x"/></svg>Erros</dt><dd id="statErrors">0/3</dd></div>
+          <div><dt><svg class="icon"><use href="#i-bulb"/></svg>Dicas</dt><dd id="statHints">0</dd></div>
+        </dl>
+        <p class="victory__record" id="victoryRecord" hidden></p>
+        <button class="btn btn--gold btn--xl" type="button" data-action="reveal" data-autofocus>
+          <svg class="icon"><use href="#i-book"/></svg><span>REVELAR O ENSINAMENTO</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- F. Derrota -->
+    <div class="overlay" id="overlay-defeat">
+      <div class="panel panel--defeat" role="dialog" aria-modal="true" aria-labelledby="defeatTitle">
+        <div class="panel__tab">LEVEL 1</div>
+        <h2 class="defeat__title" id="defeatTitle">VOCÊ NÃO CONSEGUIU DESTA VEZ</h2>
+        <div class="defeat__card">
+          <span class="life is-lost"><svg class="icon"><use href="#i-x"/></svg></span>
+          <span class="life is-lost"><svg class="icon"><use href="#i-x"/></svg></span>
+          <span class="life is-lost"><svg class="icon"><use href="#i-x"/></svg></span>
+        </div>
+        <p class="defeat__text" id="defeatText"></p>
+        <div class="panel__buttons panel__buttons--wide">
+          <button class="btn btn--gold" type="button" data-action="restart" data-autofocus>
+            <svg class="icon"><use href="#i-restart"/></svg><span>TENTAR NOVAMENTE</span>
+          </button>
+          <button class="btn btn--blue" type="button" data-action="menu">
+            <svg class="icon"><use href="#i-home"/></svg><span>VOLTAR AO MENU</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transição de revelação -->
+    <div class="reveal-flash" id="revealFlash" aria-hidden="true"></div>
+    <canvas class="fx" id="fx" aria-hidden="true"></canvas>
+    <div class="sr-only" id="announcer" aria-live="assertive" aria-atomic="true"></div>
+  </main>
+
+  <noscript>
+    <p class="noscript">Cryptic Faith precisa de JavaScript para funcionar.</p>
+  </noscript>
+
+  <script src="js/cryptogram.js"></script>
+  <script src="js/levels.js"></script>
+  <script src="js/symbols.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/interface.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
